@@ -4,21 +4,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        'weather-primary': '#7E9EDD',
-        'weather-secondary': '#004E71',
-        'wheather-gray': '#000000'
+        'weather-primary': '#6A7FAB',
+        'weather-secondary': '#B3D9FF',
+        'weather-tertiary': '#3F5F8A',
+        'wheather-gray': '#000000',
+        'wheather-text': '#333333'
       },
       fontFamily: {
-        'open-sans': ['Open Sans', 'sans-serif']
+        'nanum-gothic': ['Nanum Gothic Coding', 'Open Sans', 'sans-serif']
       },
     },
     container: {
       padding: "2rem",
       center: true,
-    },
-    screens: {
-      sm: "640px",
-      md: "768px",
     },
   },
   plugins: [],

@@ -7,9 +7,29 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      meta: {
+        title: 'Home'
+      }
     },
+    {
+      path: '/wheather/:state/:city',
+      name: 'detailCity',
+      component: () => import('../views/CityView.vue'),
+      meta: {
+        title: 'Weather'
+      }
+    }
   ]
-})
+});
 
-export default router
+router.beforeEach((to, _, next) => {
+  document.title = `${
+    (to.params?.state && to.params?.city) 
+      ? `${to.params.state}, ${to.params.state}` 
+      : to.meta.title} | The Local Weather`;
+
+  next();
+});
+
+export default router;
