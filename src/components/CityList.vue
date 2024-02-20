@@ -1,5 +1,5 @@
 <template>
-  <div v-for="city in savedCities" :key="city.id" class="flex flex-col items-center w-full">
+  <div v-for="city in savedCities" :key="city.id" class="flex justify-center w-full">
     <CityCard 
       :city="city" 
       :removeCityCard="removeCityCard"

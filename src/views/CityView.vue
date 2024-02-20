@@ -3,7 +3,7 @@
     <Suspense>
       <DetailCity />
       <template #fallback>
-        Loading...
+        <CityViewSkeleton />
       </template>
     </Suspense>
   </div>
@@ -11,5 +11,5 @@
 
 <script setup>
 import DetailCity from '../components/DetailCity.vue';
-
+import CityViewSkeleton from '../components/CityViewSkeleton.vue';
 </script>

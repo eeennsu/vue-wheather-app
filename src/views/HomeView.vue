@@ -40,14 +40,12 @@
       </ul>
     </section> 
 
-    <section class="flex flex-col w-full max-w-3xl gap-4 mt-20">
+    <section class="flex flex-col items-center w-full max-w-3xl gap-4 mt-20 ">
       <Suspense>
         <CityList />
 
         <template #fallback>
-          <p>
-            Loading...
-          </p>
+          <CityListSkeleton />
         </template>
       </Suspense>
     </section>
@@ -58,6 +56,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import CityList from '../components/CityList.vue';
+import CityListSkeleton from '../components/CityListSkeleton.vue';
 import axios from 'axios';
 
 const router = useRouter();
