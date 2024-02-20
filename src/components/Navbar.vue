@@ -1,7 +1,7 @@
 <template>
-  <header class="sticky top-0 flex justify-center shadow-md bg-weather-tertiary">
+  <header class="sticky top-0 flex justify-center shadow-md bg-weather-primary">
 
-    <nav class="flex flex-col items-center w-full max-w-3xl py-4 text-white sm:py-6 max-sm:gap-6 sm:flex-row sm:justify-between">
+    <nav class="flex flex-col items-center w-full max-w-3xl py-4 sm:py-6 max-sm:gap-6 sm:flex-row sm:justify-between">
       <RouterLink :to="{ name: 'home' }">   
         <div class="flex items-center flex-1 gap-4">
           <font-awesome-icon :icon="['fas', 'sun']" class="text-3xl" />
@@ -94,9 +94,9 @@ const addCity = () => {
   localStorage.setItem('savedCities', JSON.stringify(savedCities));
 
   let query = Object.assign({}, route.query);
-  delete query.preview;
   
+  delete query.preview;
+  query.id = locationObj.id;
   router.replace({ query });
-  alert('추가되었습니다');
 ;}
 </script>

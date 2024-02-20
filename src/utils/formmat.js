@@ -10,7 +10,7 @@ export const getHour = (curHour) => {
 }
 
 export const getWeekDay = (time) => {
-  new Date(time).toLocaleDateString(
+  return new Date(time).toLocaleDateString(
     'ko-KR',
     {
       weekday: 'long'

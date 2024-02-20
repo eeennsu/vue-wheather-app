@@ -1,6 +1,10 @@
 <template>
-  <div v-for="city in savedCities" :key="city.id" class="w-full">
-    <CityCard :city="city" @click="gotoCityView(city)" />
+  <div v-for="city in savedCities" :key="city.id" class="flex flex-col items-center w-full">
+    <CityCard 
+      :city="city" 
+      :removeCityCard="removeCityCard"
+      @click="goToCityView(city)" 
+    />
   </div>
 
   <p v-if="savedCities.length === 0" class="text-center">
@@ -9,20 +13,20 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import CityCard from './CityCard.vue';
 import axios from 'axios';
 
-let savedCities = reactive([]);
+const savedCities = ref([]);
 
 const getCities = async () => {
   if (localStorage.getItem('savedCities')) {
-    savedCities = JSON.parse(localStorage.getItem('savedCities'));
+    savedCities.value = JSON.parse(localStorage.getItem('savedCities'));
 
     const requests = [];
     
-    savedCities.forEach((city) => {
+    savedCities.value.forEach((city) => {
       const response = axios.get('https://api.openweathermap.org/data/2.5/weather', {
         params: {
           lat: city.coords.lat,
@@ -38,7 +42,7 @@ const getCities = async () => {
     const weatherData = await Promise.all(requests);
 
     weatherData.forEach((weather, i) => {
-      savedCities[i].weather = weather.data;
+      savedCities.value[i].weather = weather.data;
     });
   }
 }
@@ -46,7 +50,7 @@ const getCities = async () => {
 await getCities();
 
 const router = useRouter();
-const gotoCityView = (city) => {
+const goToCityView = (city) => {
   router.push({
     name: 'detailCity',
     params: {
@@ -54,9 +58,22 @@ const gotoCityView = (city) => {
       state: city?.state,
     },
     query: {
+      id: city?.id,
       lat: city?.coords.lat,
-      lng: city?.coords.lng
+      lng: city?.coords.lng,
     }
   });
 }
+
+const removeCityCard = (cityId) => {
+  
+  let filteredCities = savedCities.value.filter((city) => {
+    return city.id !== cityId;
+  });
+
+  localStorage.setItem('savedCities', JSON.stringify(filteredCities));
+
+  savedCities.value = [...filteredCities];
+}
+
 </script>

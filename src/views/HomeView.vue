@@ -1,25 +1,28 @@
 <template>
-  <main class="flex flex-col items-center">
+  <main class="flex flex-col items-center text-wheather-text">
     <section class="relative w-full max-w-3xl px-4 mt-10">
-      <input 
-        class="w-full p-2 text-lg text-white bg-transparent border-b outline-none placeholder:text-white/65" 
-        v-model="searchTerm"
-        @input="getSearchResult"
-        placeholder="Search for a city or country" 
-        type="text"
-      > 
+      <div class="relative flex items-center justify-between">
+        <input 
+          class="w-full p-2 text-lg bg-transparent border-b outline-none border-b-wheather-text placeholder:text-wheather-text" 
+          v-model="searchTerm"
+          @input="getSearchResult"
+          placeholder="Search for a city or country" 
+          type="text"
+        > 
+        <font-awesome-icon :icon="['fas', 'magnifying-glass']" class="absolute text-lg cursor-pointer right-2" />
+      </div>
 
-      <ul class="absolute w-full rounded-sm text-white shadow-md bg-weather-tertiary top-[66px]">
+      <ul class="absolute w-full max-w-[736px] rounded-md shadow-md bg-weather-tertiary top-[66px] z-50 transition-opacity">
         <p 
           v-if="searchError" 
-          class="px-4 py-2.5 italic text-white/75"
+          class="px-4 py-2.5 italic "
         >
           Sorry, something went wrong...
         </p>
 
         <p 
           v-if="!searchError && searchResults?.length === 0"
-          class="px-4 py-2.5 italic text-white/75"
+          class="px-4 py-2.5 italic "
         >
           No results match.
         </p>
@@ -29,7 +32,7 @@
             v-for="result in searchResults" 
             :key="result.id && searchTerm.length === 0"
             @click="previewCity(result)"
-            class="w-full px-4 py-2.5 border-b cursor-pointer border-b-white/70 hover:bg-weather-primary/55 last-of-type:border-b-0"
+            class="w-full px-4 py-2.5 border-b cursor-pointer border-b-wheather-text hover:bg-weather-primary/55 last-of-type:border-b-0"
           >
             {{ result?.place_name }}
           </li>
@@ -79,7 +82,6 @@ const fetchCities = async () => {
 
       const { data } = await axios.request(options);
       searchResults.value = data.features;
-      console.log(searchResults.value);
       
     } else {
       searchResults.value = null;
